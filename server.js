@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.json(), cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const MongoAtlasURL = 'mongodb+srv://Taras:Qaz123@cluster0-xhxir.mongodb.net/test?retryWrites=true&w=majority';
 const SERVER = '127.0.0.1:27017';
 const DB = 'hotdoglist';
@@ -40,9 +40,9 @@ connection.on('connected', () => console.log('Connected to database'));
 connection.on('error', (err) => console.log('Connection failed with - ', err));
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, '/build')));
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+	res.sendFile(path.join(__dirname + '/build/index.html'));
 });
 
 app.get('/hotdoglist', (req, res, next) => {
